@@ -15,7 +15,10 @@ export const DisplayPosts = () => {
   } = useQuery("postsData", retrievePosts);
 
   if (isLoading) return <div>Fetching posts...</div>;
-  if (error) return <div>An error occurred: {(error as {message: string})?.message}</div>;
+  if (error)
+    return (
+      <div>An error occurred: {(error as { message: string })?.message}</div>
+    );
   return (
     <ul>
       {posts.map((post: any) => (
