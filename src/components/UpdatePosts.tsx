@@ -1,18 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { NewPost } from "./AddPosts";
 
-export type NewPost = {
-  title: string;
-  body: string;
-};
-
-export const AddPosts = () => {
+export const UpdatePost = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const mutation = useMutation((newPost: NewPost) =>
-    axios.post("https://jsonplaceholder.typicode.com/posts", newPost)
+  const mutation = useMutation((updatedPost: NewPost) =>
+    axios.put("https://jsonplaceholder.typicode.com/posts/1", updatedPost)
   );
 
   const submitData = () => {
@@ -20,7 +16,7 @@ export const AddPosts = () => {
   };
 
   if (mutation.isLoading) {
-    return <span>Submitting...</span>;
+    return <span>Updating...</span>;
   }
 
   if (mutation.isError) {
@@ -30,11 +26,11 @@ export const AddPosts = () => {
   }
 
   if (mutation.isSuccess) {
-    return <span>Post submitted!</span>;
+    return <span>Post updated!</span>;
   }
 
   return (
-    <>
+    <div>
       <input
         type="text"
         value={title}
@@ -47,7 +43,7 @@ export const AddPosts = () => {
         onChange={(e) => setBody(e.target.value)}
         placeholder="Body"
       />
-      <button onClick={submitData}>Submit</button>
-    </>
+      <button onClick={submitData}>Update</button>
+    </div>
   );
 };
